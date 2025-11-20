@@ -50,13 +50,14 @@
         
         body {
             min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0a0a;
             overflow-x: hidden;
             position: relative;
+            color: #ffffff;
         }
         
-        /* Animated Background Particles */
+        /* Professional Background */
         .particles {
             position: fixed;
             top: 0;
@@ -65,13 +66,15 @@
             height: 100%;
             overflow: hidden;
             z-index: 1;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%);
         }
         
         .particle {
             position: absolute;
-            background: rgba(255, 255, 255, 0.5);
+            background: linear-gradient(45deg, #3498db, #2ecc71);
             border-radius: 50%;
-            animation: float 15s infinite;
+            animation: float 20s infinite ease-in-out;
+            opacity: 0.1;
         }
         
         @keyframes float {
@@ -79,16 +82,30 @@
                 transform: translateY(0) translateX(0) scale(1);
                 opacity: 0;
             }
-            10% {
-                opacity: 0.5;
+            15% {
+                opacity: 0.15;
             }
-            90% {
-                opacity: 0.5;
+            85% {
+                opacity: 0.15;
             }
             100% {
-                transform: translateY(-100vh) translateX(100px) scale(0.5);
+                transform: translateY(-100vh) translateX(50px) scale(0.8);
                 opacity: 0;
             }
+        }
+        
+        /* Grid Background */
+        .particles::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(52, 152, 219, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(52, 152, 219, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
         }
         
         /* Main Container */
@@ -106,31 +123,42 @@
         /* Header Section */
         header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
             animation: fadeInDown 1s ease-out;
         }
         
         h1 {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            animation: glow 2s ease-in-out infinite alternate;
+            font-size: 4rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            line-height: 1.2;
         }
         
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #667eea;
-            }
-            to {
-                text-shadow: 0 0 20px #fff, 0 0 30px #764ba2, 0 0 40px #764ba2;
-            }
+        h1::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            margin: 20px auto 0;
+            border-radius: 2px;
         }
         
         .subtitle {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 30px;
+            font-size: 1.25rem;
+            color: #94a3b8;
+            margin-bottom: 10px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        
+        .tagline {
+            font-size: 0.95rem;
+            color: #64748b;
+            font-weight: 300;
+            margin-top: 10px;
         }
         
         /* Interactive Cards */
@@ -145,12 +173,12 @@
         }
         
         .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            background: rgba(26, 26, 46, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 35px;
+            border: 1px solid rgba(52, 152, 219, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -159,80 +187,109 @@
         .card::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            transform: scale(0);
-            transition: transform 0.5s ease;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, rgba(46, 204, 113, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
         
         .card:hover::before {
-            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            transition: width 0.4s ease;
+        }
+        
+        .card:hover::after {
+            width: 100%;
         }
         
         .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-8px);
+            border-color: rgba(52, 152, 219, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
         
         .card-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
             display: block;
+            filter: grayscale(20%);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover .card-icon {
+            transform: scale(1.1);
         }
         
         .card h3 {
-            color: white;
+            color: #ffffff;
             font-size: 1.5rem;
-            margin-bottom: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
         }
         
         .card p {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
+            color: #94a3b8;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            font-weight: 300;
         }
         
         /* Interactive Button */
         .cta-button {
-            background: white;
-            color: #667eea;
-            padding: 15px 40px;
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            color: #ffffff;
+            padding: 16px 48px;
             border: none;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 20px rgba(52, 152, 219, 0.3);
             position: relative;
             overflow: hidden;
             animation: fadeInUp 1s ease-out 0.6s backwards;
+            text-transform: uppercase;
+            font-size: 0.875rem;
         }
         
         .cta-button::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(102, 126, 234, 0.1);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
         }
         
         .cta-button:hover::before {
-            width: 300px;
-            height: 300px;
+            left: 100%;
         }
         
         .cta-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(52, 152, 219, 0.4);
+        }
+        
+        .cta-button:active {
+            transform: translateY(0);
         }
         
         .cta-button span {
@@ -254,42 +311,50 @@
         }
         
         .modal-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1a1a2e;
+            border: 1px solid rgba(52, 152, 219, 0.2);
             margin: 10% auto;
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 500px;
+            padding: 45px;
+            border-radius: 16px;
+            max-width: 550px;
             text-align: center;
             animation: slideIn 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
         }
         
         .modal-content h2 {
-            color: white;
+            color: #ffffff;
             margin-bottom: 20px;
             font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
         
         .modal-content p {
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 30px;
+            color: #94a3b8;
+            margin-bottom: 35px;
             line-height: 1.8;
+            font-size: 1rem;
+            font-weight: 300;
         }
         
         .close-btn {
-            background: white;
-            color: #667eea;
-            padding: 10px 30px;
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            color: #ffffff;
+            padding: 12px 36px;
             border: none;
-            border-radius: 25px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 600;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.5px;
         }
         
         .close-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
         }
         
         /* Animations */
@@ -355,21 +420,69 @@
         footer {
             position: relative;
             z-index: 2;
-            color: rgba(255, 255, 255, 0.8);
+            color: #64748b;
             text-align: center;
-            padding: 20px;
+            padding: 30px 20px;
             animation: fadeIn 1s ease-out 0.9s backwards;
+            margin-top: 60px;
+            border-top: 1px solid rgba(52, 152, 219, 0.1);
+        }
+        
+        footer p {
+            font-size: 0.9rem;
+            margin: 8px 0;
+            font-weight: 300;
         }
         
         footer a {
-            color: white;
+            color: #3498db;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 500;
             transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        footer a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #3498db;
+            transition: width 0.3s ease;
         }
         
         footer a:hover {
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            color: #2ecc71;
+        }
+        
+        footer a:hover::after {
+            width: 100%;
+            background: #2ecc71;
+        }
+        
+        .social-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: rgba(52, 152, 219, 0.2);
+            transform: translateY(-3px);
         }
     </style>
 </head>
@@ -381,42 +494,60 @@
     <div class="container">
         <header>
             <h1>Tahreem Fatima</h1>
-            <p class="subtitle">Web Developer & Creative Designer</p>
+            <p class="subtitle">Full-Stack Developer & UI/UX Designer</p>
+            <p class="tagline">Building elegant digital solutions with modern technologies</p>
         </header>
         
         <main class="cards-container">
             <article class="card" onclick="showModal('about')">
-                <span class="card-icon">👋</span>
-                <h3>About Me</h3>
-                <p>Passionate developer crafting beautiful digital experiences with code and creativity.</p>
+                <span class="card-icon">👤</span>
+                <h3>About</h3>
+                <p>Experienced developer specializing in creating scalable web applications with clean, maintainable code and exceptional user experiences.</p>
             </article>
             
             <article class="card" onclick="showModal('skills')">
-                <span class="card-icon">💻</span>
-                <h3>My Skills</h3>
-                <p>Expertise in modern web technologies, responsive design, and interactive interfaces.</p>
+                <span class="card-icon">⚡</span>
+                <h3>Expertise</h3>
+                <p>Proficient in modern frameworks, responsive design, API development, and delivering high-performance solutions.</p>
             </article>
             
             <article class="card" onclick="showModal('projects')">
-                <span class="card-icon">🚀</span>
-                <h3>Projects</h3>
-                <p>Explore my portfolio of innovative projects and creative solutions.</p>
+                <span class="card-icon">💼</span>
+                <h3>Portfolio</h3>
+                <p>A comprehensive collection of production-ready applications and innovative projects showcasing technical excellence.</p>
             </article>
             
             <article class="card" onclick="showModal('contact')">
-                <span class="card-icon">📧</span>
-                <h3>Get In Touch</h3>
-                <p>Let's collaborate and create something amazing together!</p>
+                <span class="card-icon">✉️</span>
+                <h3>Contact</h3>
+                <p>Open for collaboration, consulting opportunities, and discussing innovative project ideas.</p>
             </article>
         </main>
         
         <button class="cta-button" onclick="showModal('welcome')">
-            <span>Learn More</span>
+            <span>View Portfolio</span>
         </button>
         
         <footer>
-            <p>&copy; 2025 Tahreem Fatima. All rights reserved.</p>
-            <p><a href="https://github.com/TahreemEjaz" target="_blank" rel="noopener">GitHub</a></p>
+            <div class="social-links">
+                <a href="https://github.com/TahreemEjaz" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://linkedin.com/in/tahreemejaz" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </a>
+                <a href="mailto:tahreem@example.com" aria-label="Email" title="Email">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/>
+                    </svg>
+                </a>
+            </div>
+            <p style="margin-top: 25px;">&copy; 2025 Tahreem Fatima. All rights reserved.</p>
+            <p style="font-size: 0.8rem; margin-top: 5px;">Crafted with precision and passion</p>
         </footer>
     </div>
     
@@ -450,24 +581,24 @@
         // Modal functionality
         const modalContent = {
             welcome: {
-                title: 'Welcome! 🎉',
-                text: 'Thank you for visiting my portfolio. Explore the cards above to learn more about my skills, projects, and how we can work together!'
+                title: 'Professional Portfolio',
+                text: 'Welcome to my professional portfolio. I specialize in building robust, scalable web applications with a focus on clean architecture and exceptional user experience. Explore my work and let\'s discuss how I can contribute to your next project.'
             },
             about: {
-                title: 'About Me 👋',
-                text: 'I\'m Tahreem Fatima, a passionate web developer dedicated to creating beautiful, functional, and user-friendly websites. I love bringing ideas to life through code!'
+                title: 'About Me',
+                text: 'I\'m Tahreem Fatima, a full-stack developer with expertise in modern web technologies. I combine technical proficiency with creative problem-solving to deliver high-quality solutions that meet business objectives and exceed user expectations.'
             },
             skills: {
-                title: 'My Skills 💻',
-                text: 'I specialize in HTML, CSS, JavaScript, and modern web frameworks. I create responsive designs, interactive interfaces, and focus on clean, maintainable code.'
+                title: 'Technical Expertise',
+                text: 'Proficient in JavaScript, TypeScript, React, Node.js, and modern web frameworks. Experienced in RESTful APIs, responsive design, performance optimization, and following industry best practices for scalable application development.'
             },
             projects: {
-                title: 'Projects 🚀',
-                text: 'I\'ve worked on various projects ranging from personal portfolios to complex web applications. Each project is an opportunity to learn and innovate!'
+                title: 'Portfolio',
+                text: 'My portfolio showcases diverse projects including enterprise applications, e-commerce platforms, and SaaS products. Each project demonstrates strong technical implementation, attention to detail, and measurable business impact.'
             },
             contact: {
-                title: 'Get In Touch 📧',
-                text: 'I\'m always open to new opportunities and collaborations. Feel free to reach out through GitHub or connect with me to discuss your next project!'
+                title: 'Let\'s Connect',
+                text: 'I\'m available for consulting, freelance opportunities, and full-time positions. Connect with me on LinkedIn or GitHub, or send an email to discuss how we can work together on your next project.'
             }
         };
         
