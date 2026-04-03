@@ -42,6 +42,9 @@
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>" />
 
+    <!-- ══════ THEME — prevent flash of wrong theme ══════ -->
+    <script>(function(){var t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})()</script>
+
     <!-- ══════ FONTS ══════ -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -108,6 +111,10 @@
             margin: 0;
             padding: 0
         }
+        *::selection{
+            background: var(--rose);
+            color: var(--white);
+        }
 
         html {
             scroll-behavior: auto
@@ -119,7 +126,8 @@
             background: var(--bg);
             color: var(--text);
             overflow-x: hidden;
-            line-height: 1.65
+            line-height: 1.65;
+            transition: background-color .3s ease, color .3s ease
         }
 
         ::-webkit-scrollbar {
@@ -308,6 +316,10 @@
             -webkit-backdrop-filter: blur(22px);
             border-bottom: 1px solid rgba(255, 255, 255, .07);
             transition: box-shadow .3s;
+        }
+
+        nav {
+            transition: box-shadow .3s, background .3s
         }
 
         nav.scrolled {
@@ -586,6 +598,7 @@
         #typed {
             color: var(--rose);
             font-weight: 600;
+            min-width: clamp(160px, 25vw, 220px);
             text-align: left
         }
 
@@ -1759,6 +1772,127 @@
             }
         }
 
+        /* ─── THEME TOGGLE BUTTON ─── */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .theme-toggle {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--glass);
+            border: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-s);
+            flex-shrink: 0;
+            transition: background .22s, color .22s, border-color .22s
+        }
+
+        .theme-toggle:hover {
+            background: rgba(249, 168, 212, .15);
+            color: var(--rose);
+            border-color: rgba(249, 168, 212, .35)
+        }
+
+        .theme-toggle svg {
+            width: 17px;
+            height: 17px;
+            position: absolute;
+            transition: opacity .25s, transform .3s
+        }
+
+        .theme-toggle .icon-sun {
+            opacity: 0;
+            transform: scale(.5) rotate(30deg)
+        }
+
+        .theme-toggle .icon-moon {
+            opacity: 1;
+            transform: scale(1) rotate(0deg)
+        }
+
+        html[data-theme="light"] .theme-toggle .icon-sun {
+            opacity: 1;
+            transform: scale(1) rotate(0deg)
+        }
+
+        html[data-theme="light"] .theme-toggle .icon-moon {
+            opacity: 0;
+            transform: scale(.5) rotate(-30deg)
+        }
+
+        /* ═══════════════════════════════════════════════════
+           LIGHT THEME
+        ═══════════════════════════════════════════════════ */
+        html[data-theme="light"] {
+            --bg: #fdf8ff;
+            --bg2: #f5f0fe;
+            --bg3: #ede5ff;
+            --bg4: #e3d8fa;
+            --glass: rgba(124, 58, 237, .07);
+            --glass-border: rgba(124, 58, 237, .14);
+            --card-bg: rgba(255, 255, 255, .88);
+            --text: #1a0535;
+            --text-s: #4a3268;
+            --text-m: #7c6a99;
+            --glow-r: 0 0 50px rgba(249, 168, 212, .35);
+            --glow-l: 0 0 50px rgba(196, 181, 253, .35);
+            --shadow: 0 8px 40px rgba(124, 58, 237, .18);
+            --border: 1px solid rgba(124, 58, 237, .15)
+        }
+
+        html[data-theme="light"] nav {
+            background: rgba(253, 248, 255, .9);
+            border-bottom-color: rgba(124, 58, 237, .12)
+        }
+
+        html[data-theme="light"] body::before {
+            opacity: .1
+        }
+
+        html[data-theme="light"] .dot-grid {
+            background-image: radial-gradient(circle, rgba(124, 58, 237, .14) 1px, transparent 1px)
+        }
+
+        html[data-theme="light"] .hero-name .first {
+            color: var(--text)
+        }
+
+        html[data-theme="light"] .sk-cat-info-name,
+        html[data-theme="light"] .about-body p strong,
+        html[data-theme="light"] .detail-val,
+        html[data-theme="light"] .cinfo-value,
+        html[data-theme="light"] .cform-title {
+            color: var(--text)
+        }
+
+        html[data-theme="light"] .fg input,
+        html[data-theme="light"] .fg textarea {
+            color: var(--text);
+            background: rgba(124, 58, 237, .04);
+            border-color: rgba(124, 58, 237, .15)
+        }
+
+        html[data-theme="light"] .fg input:focus,
+        html[data-theme="light"] .fg textarea:focus {
+            background: rgba(236, 72, 153, .06)
+        }
+
+        html[data-theme="light"] .avatar-tf-overlay {
+            background: rgba(253, 248, 255, .85)
+        }
+
+        html[data-theme="light"] ::-webkit-scrollbar-track {
+            background: var(--bg)
+        }
+
         /* ── KEYFRAMES ── */
         @keyframes fadeIn {
             from {
@@ -1811,9 +1945,29 @@
             <li><a href="#skills">Skills</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
-        <button class="ham" id="ham" aria-label="Toggle navigation menu">
-            <span></span><span></span><span></span>
-        </button>
+        <div class="nav-actions">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme">
+                <!-- Moon icon (dark mode) -->
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <!-- Sun icon (light mode) -->
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+            <button class="ham" id="ham" aria-label="Toggle navigation menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </nav>
 
 
@@ -2405,6 +2559,18 @@
                 });
             }, { threshold: 0.12 });
             obs.observe(card);
+        });
+
+
+        /* ══════════════════════════════════════════
+           THEME TOGGLE
+        ══════════════════════════════════════════ */
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+            const next = isLight ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
         });
 
 
